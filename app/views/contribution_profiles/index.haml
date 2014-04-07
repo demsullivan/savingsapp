@@ -1,0 +1,46 @@
+.container(style="margin-top: 50px;")
+  .row
+    .col-lg-12
+      .jumbotron
+        %h1 Contributions
+        - if @profiles.length == 0
+          %p
+            Here, we'll set up your contribution settings. This allows you to divide up a single contribution
+            to your savings account into multiple smaller chunks that get added to each of your goals.
+            - 
+            = form_for ContributionProfile.new, remote: true do |f|
+              = f.label :name
+              = f.text_field :name, class: "form-control"
+              %table.table.table-striped
+                %thead
+                  %tr
+                    %th Budget
+                    %th Rate %
+                %tbody
+                  - @budgets.each do |budget|
+                    %tr
+                      %td= budget.name
+                      %td
+                        = f.fields_for :contribution_rates, ContributionRate.new do |cr|
+                          = cr.hidden_field :budget_id, :value => budget.id
+                          = cr.text_field :rate
+                %tfoot
+                  %tr
+                    %td(colspan="2")
+                      = f.submit class: "btn btn-primary", value: "Save", id: "btn_save_profile"
+                      = link_to "Continue", {controller: "transactions"}, id: "btn_continue", class: "btn btn-primary hidden"
+
+        - else
+          %p
+            Looks like you've already got a contribution profile set up!
+          %table.table.table-striped.table-bordered
+            - @profiles.each do |profile|
+              %tr
+                %td(colspan="2")
+                  %strong= profile.name
+              - profile.contribution_rates.each do |rate|
+                %tr
+                  %td= rate.budget.name
+                  %td #{rate.rate}%          
+          %p= link_to "Continue", {controller: "transactions"}, class: "btn btn-primary btn-lg"
+            
