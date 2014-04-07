@@ -3,23 +3,33 @@
     .col-lg-12
       .jumbotron
         %h1 Welcome!
+        %p
+          SaveTracker is a tool for achieving financial goals and budgeting your savings. SaveTracker will tell you
+          how long it will take to achieve a goal, or, conversely, how much you need to contribute in order
+          to achieve a goal by a certain date.
         %p Let's start by setting up a few savings goals.
-        %p= link_to "Add goal", "#", "data-target" => "#addGoalModal", "data-toggle" => "modal", class: "btn btn-primary btn-lg"
-        %table.table.table-striped
+        %p= link_to "Add goal", "#", "data-target" => "#add_goal_modal", "data-toggle" => "modal", class: "btn btn-primary btn-lg"
+        - goal_table_class = "hidden" if @budgets.length == 0 else ""
+        %table.table.table-hover#goal_table{:class => goal_table_class}
           %thead
             %tr
               %th Name
               %th Balance
               %th Goal
-          %tbody
+          %tbody#goal_table_body
             - @budgets.each do |b|
               %tr
                 %td= b.name
-                %td= b.balance
-                %td= b.goal
+                %td #{number_to_currency(b.balance)}
+                %td #{number_to_currency(b.goal)}
+        #continue
+          - if @budgets.length > 0
+            %p It looks like you already have goals set up! Feel free to add more, or click Continue.
+            = link_to "Continue", {controller: "contribution_profiles"}, class: "btn btn-primary btn-lg", id: "btn_exist_continue"
+          = link_to "Continue", {controller: "contribution_profiles"}, class: "btn btn-primary btn-lg hidden", id: "btn_continue"
               
 
-.modal.fade#addGoalModal(role="dialog")
+.modal.fade#add_goal_modal(role="dialog")
   .modal-dialog
     .modal-content
       .modal-header

@@ -14,4 +14,5 @@ class BudgetsController < ApplicationController
       end
     end
   end
+
 end

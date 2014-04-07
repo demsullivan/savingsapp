@@ -1,5 +1,6 @@
 Savingsapp::Application.routes.draw do
   resources :budgets
+  resources :contribution_profiles
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
