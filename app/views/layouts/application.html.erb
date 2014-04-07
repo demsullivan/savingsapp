@@ -3,10 +3,15 @@
 <head>
   <title>Savingsapp</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_tag type: "text/javascript" do -%>
+    var controller = "<%= page_controller %>";
+    var action = "<%= page_action %>";
+    var id = null;
+  <% end -%>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body id="<%= page_id %>" class="<%= page_class %>">
 
 <%= yield %>
 

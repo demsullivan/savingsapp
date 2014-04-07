@@ -1,1 +1,37 @@
-%h2 Hello world!
+.container(style="margin-top: 50px")
+  .row
+    .col-lg-12
+      .jumbotron
+        %h1 Welcome!
+        %p Let's start by setting up a few savings goals.
+        %p= link_to "Add goal", "#", "data-target" => "#addGoalModal", "data-toggle" => "modal", class: "btn btn-primary btn-lg"
+        %table.table.table-striped
+          %thead
+            %tr
+              %th Name
+              %th Balance
+              %th Goal
+          %tbody
+            - @budgets.each do |b|
+              %tr
+                %td= b.name
+                %td= b.balance
+                %td= b.goal
+              
+
+.modal.fade#addGoalModal(role="dialog")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button(type="button" class="close" data-dismiss="modal") &times;
+        %h4.modal-title Add Goal
+      .modal-body
+        = form_for Budget.new, remote: true do |f|
+          = f.label :name
+          = f.text_field :name, class: "form-control"
+
+          = f.label :goal
+          = f.text_field :goal, class: "form-control"
+      .modal-footer
+        %button(type="button" class="btn btn-default" data-dismiss="modal") Close
+        %button(type="button" class="btn btn-primary" onclick="$('#new_budget').submit();") Save goal

@@ -43,5 +43,5 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-gem "twitter-bootstrap-rails"
-gem "haml-rails"
+gem 'bootstrap-sass', '~> 3.1.1'
+gem 'haml-rails'

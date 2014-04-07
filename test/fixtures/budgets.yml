@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  balance: 9.99
+  goal: 9.99
+  notes: MyText
+
+two:
+  name: MyString
+  balance: 9.99
+  goal: 9.99
+  notes: MyText
