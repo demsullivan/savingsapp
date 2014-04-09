@@ -1,4 +1,4 @@
-class TransactionsController < ApplicationController
+class SavingsTransactionsController < ApplicationController
   def index
     @profile = ContributionProfile.all()[0]
   end

@@ -10,7 +10,7 @@ class ContributionProfilesController < ApplicationController
       if @profile.save
         f.json { render json: @profile, status: :created, location: @profile }
       else
-        f.json { render json: @budget.errors, status: :unprocessable_entity }
+        f.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
   end
