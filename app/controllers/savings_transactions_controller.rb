@@ -1,13 +1,14 @@
 class SavingsTransactionsController < ApplicationController
   def index
-    @profile = ContributionProfile.all()[0]
+    @profile = ContributionProfile.first
   end
 
   def create
-    @profile = ContributionProfile.find(params[:transaction][:contribution_profile_id])
-    @transaction = SavingsTransaction.new_from_profile(params[:transaction][:amount], @profile)
+    params = params_for_create_transaction
+    @profile = ContributionProfile.find(params[:contribution_profile_id])
+    @transaction = SavingsTransaction.new_from_profile(params[:amount].to_d, @profile)
     respond_to do |f|
-      if @transaction
+      if @transaction.save
         f.json { render json: @transaction.children.all, status: :created, location: @transaction }
       else
         f.json { render json: @transaction.errors, status: :unprocessable_entity }
@@ -17,6 +18,6 @@ class SavingsTransactionsController < ApplicationController
 
   private
   def params_for_create_transaction
-    params.require(:transaction).permit(:amount, :contribution_profile_id)
+    params.require(:savings_transaction).permit(:amount, :contribution_profile_id)
   end
 end

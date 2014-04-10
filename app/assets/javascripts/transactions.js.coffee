@@ -32,3 +32,7 @@ class @SavingsTransactionsController
       if $this.timeoutId
         clearTimeout(this.timeoutId)
       this.timeoutId = setTimeout(updateContributions, 500)
+
+    $('#new_savings_transaction').on 'ajax:success', (ev, data, status, xhr) ->
+      $('#btn_submit').addClass 'hidden'
+      $('#btn_continue').removeClass 'hidden'

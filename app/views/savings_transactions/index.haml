@@ -6,7 +6,7 @@
         %p
           Great! Now it's time to enter your first transaction. The contribution profile that you just created will be automatically selected. Enter a contribution amount, and SaveTracker will give you a preview of how your contribution will be divided up before you go ahead and commit the data.
 
-        = form_for SavingsTransaction.new do |f|
+        = form_for SavingsTransaction.new, remote: true do |f|
           = f.label :amount
           = f.text_field :amount, class: "form-control", style: "width: 100px", id: "amount_text"
           = f.hidden_field :contribution_profile_id, :value => @profile.id
@@ -21,12 +21,13 @@
                 %th Contribution Amount
             %tbody
               - @profile.contribution_rates.each do |rate|
-                %tr.budget-row{id: "budget-" + rate.budget.id.to_s}
+                %tr.budget-row{id: "budget-#{rate.budget.id.to_s}"}
                   %td.budget-name= rate.budget.name
                   %td.budget-rate #{rate.rate}%
                   %td.budget-balance #{number_to_currency(rate.budget.balance)}
                   %td.budget-contribution-amount $0.00
-          = f.submit "Create Transaction", class: "btn btn-primary"
+          = f.submit "Create Transaction", :class => "btn btn-primary", :id => "btn_submit"
+          = link_to "Continue", root_path, :class => "btn btn-primary hidden", :id => "btn_continue"
 
     
   
