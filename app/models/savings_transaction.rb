@@ -13,14 +13,20 @@ class SavingsTransaction < ActiveRecord::Base
     txn.date = Date.today if txn.date.nil?
   end
 
-  def self.new_from_profile(amount, profile)
-    parent = SavingsTransaction.new(:amount => amount)
-    parent.save
-    profile.contribution_rates.each do |rate|
-      child_amount = amount * (rate.rate/100)
-      txn = parent.children.create(:amount => child_amount, :budget => rate.budget)
+  #################################
+  class << self
+  #################################
+
+    def new_from_profile(amount, profile)
+      parent = SavingsTransaction.new(:amount => amount)
+      parent.save
+      profile.contribution_rates.each do |rate|
+        child_amount = amount * (rate.rate/100)
+        txn = parent.children.create(:amount => child_amount, :budget => rate.budget)
+      end
+      return parent
     end
-    return parent
+
   end
       
 end
